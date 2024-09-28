@@ -1,0 +1,6 @@
+@ENERGY_NOW_BE.WebAPI_HostAddress = http://localhost:5276
+
+GET {{ENERGY_NOW_BE.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
