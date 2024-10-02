@@ -1,7 +1,7 @@
 // pages/ClientPage.tsx
 import React, { useState } from 'react';
 import Tab from '../components/Tab';
-import FindElectricianPage from './FindElectricianPage';
+import FindElectricianPage from './tab-pages/FindElectricianTab';
 
 const LandingPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('electrician');

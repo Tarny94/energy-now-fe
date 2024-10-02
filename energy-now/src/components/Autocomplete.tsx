@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
 interface IOption {
-    code?: string;
+    code?: string | number;
     label: string;
 }
 
@@ -19,8 +19,8 @@ interface IAutocomplete {
 
 const AutocompleteInput: React.FC<IAutocomplete> = ({sx, options, size, variant, label, isDisable, onChange}) => {
 
-    const handleChange = (event: React.SyntheticEvent, value: any | null) => {
-        onChange(value.label);  // Store the selected value in state
+    const handleChange = (event: React.SyntheticEvent, value: IOption | null) => {
+        value !== null? onChange(value.label) : onChange("");
     };
 
     return (
@@ -32,8 +32,8 @@ const AutocompleteInput: React.FC<IAutocomplete> = ({sx, options, size, variant,
               disabled={isDisable}               // Provide the array of options
               getOptionLabel={(option) => option.label}  // Specify how to display each option
               renderOption={(props, option) => (
-                <li {...props} key={option.code}>
-                  {option.label} {option.code !== ""? '(' + option.code + ')' : ""}
+                <li style={{fontSize: 19, fontWeight: 'bold', fontFamily: 'cursive', padding: 2}} {...props} key={option.code}>
+                  {option.label} {option.code && option.code !== ""? '(' + option.code + ')' : ""}
                 </li>
               )}
               onChange={handleChange}
