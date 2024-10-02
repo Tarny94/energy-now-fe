@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AutocompleteInput from '../../components/Autocomplete';
 import { County } from '../../utils/region/romania/ICounty';
 import { Counties } from '../../utils/region/romania/counties';
+import TabDataGrid from '../../components/DataGrid';
 
 interface IOption {
   code?: string | number;
@@ -42,26 +43,25 @@ const FindElectricianTab: React.FC = () => {
   return (
     <div>
       <div>
-        {/* Autocomplete for Counties */}
         <AutocompleteInput
           sx={{ width: 300 }}
-          options={filterCounties()} // Provide the county options
+          options={filterCounties()}
           variant={'filled'}
           label={'Choose a county'}
           isDisable={selectedCity !== ""}
           onChange={setSelectedCounty}
         />
-        
-        {/* Autocomplete for Cities */}
+  
         <AutocompleteInput
           sx={{ width: 300 }}
-          options={selectedCities} // Provide the filtered city options
+          options={selectedCities}
           variant={'filled'}
-          isDisable={selectedCounty === ""} // Disable if no county is selected
+          isDisable={selectedCounty === ""}
           label={'Choose a city'}
           onChange={setSelectedCity}
         />
       </div>
+      <TabDataGrid/>
     </div>
   );
 };
