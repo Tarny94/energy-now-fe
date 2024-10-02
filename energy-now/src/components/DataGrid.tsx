@@ -6,6 +6,7 @@ import {
   GridLogicOperator,
 } from '@mui/x-data-grid';
 import { useDemoData } from '@mui/x-data-grid-generator';
+import { electritionFirmColumnsDataGrid, rowsTestForDataGrid } from '../utils/constants/LandingPageConst';
 
 function QuickSearchToolbar() {
   return (
@@ -36,6 +37,11 @@ const TabDataGrid: React.FC = () => {
     rowLength: 100,
   });
 
+  React.useEffect(() => {
+    console.log("data", data, columns);
+    
+  },[])
+
   // Otherwise filter will be applied on fields such as the hidden column id
   const columns = React.useMemo(
     () => data.columns.filter((column) => VISIBLE_FIELDS.includes(column.field)),
@@ -45,8 +51,8 @@ const TabDataGrid: React.FC = () => {
   return (
     <Box sx={{ height: 400, width: 1 }}>
       <DataGrid
-        {...data}
-        columns={columns}
+      rows={rowsTestForDataGrid}
+        columns={electritionFirmColumnsDataGrid}
         initialState={{
           ...data.initialState,
           filter: {
