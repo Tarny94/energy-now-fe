@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Dmtidf/snoY=",
+  "dgSpecHash": "s7Q/mftLz4o=",
   "success": true,
-  "projectFilePath": "D:\\Dev\\Projects\\EnergyNow\\energy-now-be\\ENERGY-NOW-BE.WebAPI\\ENERGY-NOW-BE.WebAPI.csproj",
+  "projectFilePath": "D:\\Dev\\Projects\\energy-now-be\\ENERGY-NOW-BE.WebAPI\\ENERGY-NOW-BE.WebAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\alext\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.8\\microsoft.aspnetcore.openapi.8.0.8.nupkg.sha512",
     "C:\\Users\\alext\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",

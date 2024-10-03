@@ -13,19 +13,22 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Dev\\Projects\\EnergyNow\\energy-now-be\\ENERGY-NOW-BE.Application\\ENERGY-NOW-BE.Application.csproj",
+      "projectUniqueName": "D:\\Dev\\Projects\\energy-now-be\\ENERGY-NOW-BE.Application\\ENERGY-NOW-BE.Application.csproj",
       "projectName": "ENERGY-NOW-BE.Application",
-      "projectPath": "D:\\Dev\\Projects\\EnergyNow\\energy-now-be\\ENERGY-NOW-BE.Application\\ENERGY-NOW-BE.Application.csproj",
+      "projectPath": "D:\\Dev\\Projects\\energy-now-be\\ENERGY-NOW-BE.Application\\ENERGY-NOW-BE.Application.csproj",
       "packagesPath": "C:\\Users\\alext\\.nuget\\packages\\",
-      "outputPath": "D:\\Dev\\Projects\\EnergyNow\\energy-now-be\\ENERGY-NOW-BE.Application\\obj\\",
+      "outputPath": "D:\\Dev\\Projects\\energy-now-be\\ENERGY-NOW-BE.Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\alext\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\alext\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
