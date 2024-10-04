@@ -14,6 +14,13 @@ namespace ENERGY_NOW_BE.WebAPI.Controller
             _userService = userService;
         }
 
+        [HttpGet("test")]
+        public IActionResult Test()
+        {
+            return Ok("The API is working.");
+        }
+
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {

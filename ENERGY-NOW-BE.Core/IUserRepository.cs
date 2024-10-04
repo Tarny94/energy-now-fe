@@ -13,10 +13,4 @@ namespace ENERGY_NOW_BE.Core
         Task AddAsync(User user);
     }
 
-    public interface IRoleRepository
-    {
-        Task<Role> GetByNameAsync(string roleName);
-        Task AddAsync(Role role);
-    }
-
 }

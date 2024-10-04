@@ -1,18 +1,17 @@
 ﻿using ENERGY_NOW_BE.Core;
 using ENERGY_NOW_BE.Core.auth;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
+
+
 
 namespace ENERGY_NOW_BE.Infrastructure
 {
     public class UserRepository : IUserRepository
     {
-        private readonly AppDbContext _context;
+        private readonly DataContext _context;
 
-        public UserRepository(AppDbContext context)
+        public UserRepository(DataContext context)
         {
             _context = context;
         }

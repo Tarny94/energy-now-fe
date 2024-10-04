@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
-using Microsoft.IdentityModel.JsonWebTokens;
-using Microsoft.IdentityModel.Tokens;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace ENERGY_NOW_BE.Core.auth
@@ -23,10 +18,10 @@ namespace ENERGY_NOW_BE.Core.auth
         public string GenerateToken(User user, List<string> roles)
         {
             var claims = new List<Claim>
-        {
-        new Claim(JwtRegisteredClaimNames.Sub, user.Username),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        };
+                {
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Username),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                };
 
             // Add roles as claims
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
@@ -43,7 +38,6 @@ namespace ENERGY_NOW_BE.Core.auth
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
     }
 
 }

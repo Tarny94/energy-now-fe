@@ -1,11 +1,5 @@
 ﻿using ENERGY_NOW_BE.Core;
 using ENERGY_NOW_BE.Core.auth;
-using Org.BouncyCastle.Crypto.Generators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ENERGY_NOW_BE.Application.Auth
 {
@@ -14,10 +8,10 @@ namespace ENERGY_NOW_BE.Application.Auth
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
 
-        public UserService(IUserRepository userRepository, IRoleRepository roleRepository)
+        public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _roleRepository = roleRepository;
+            /*_roleRepository = roleRepository;*/
         }
 
         public async Task<bool> RegisterAsync(string username, string password, string role)
@@ -30,6 +24,7 @@ namespace ENERGY_NOW_BE.Application.Auth
 
             // Hash the password
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
+
 
             // Create new user
             var user = new User
