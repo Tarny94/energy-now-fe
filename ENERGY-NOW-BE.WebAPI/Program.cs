@@ -1,89 +1,53 @@
-using Microsoft.EntityFrameworkCore; // Add this using directive to resolve the Pomelo namespace
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System.Text;
+using Microsoft.EntityFrameworkCore; 
 using ENERGY_NOW_BE.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 using ENERGY_NOW_BE.Application.Auth;
-using ENERGY_NOW_BE.Core;
+using ENERGY_NOW_BE.Core.Entity;
+using ENERGY_NOW_BE.Core.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddScoped<UserService>();
-builder.Services.AddScoped<UserService>(); // Register UserService
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-// JWT Authentication
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-    };
-});
+//builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<IAuthenticationService,AuthenticationService>();
+builder.Services.AddScoped<UserRepository>();
 
 // Role-Based Authorization
-builder.Services.AddAuthorization(options =>
-{
-    // Admin can access everything
-    options.AddPolicy("AdminAccess", policy => policy.RequireRole("ADMIN"));
+builder.Services.AddAuthorization(
+//    options =>
+//{
+//    // Admin can access everything
+//    options.AddPolicy("AdminAccess", policy => policy.RequireRole("ADMIN"));
 
-    // Client can access both Client and User resources
-    options.AddPolicy("ClientAccess", policy =>
-        policy.RequireAssertion(context =>
-            context.User.IsInRole("CLIENT") || context.User.IsInRole("USER")));
+//    // Client can access both Client and User resources
+//    options.AddPolicy("ClientAccess", policy =>
+//        policy.RequireAssertion(context =>
+//            context.User.IsInRole("CLIENT") || context.User.IsInRole("USER")));
 
-    // User can access only User resources
-    options.AddPolicy("UserAccess", policy => policy.RequireRole("USER"));
-});
-
-// Add Swagger and configure to support JWT authentication
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        In = ParameterLocation.Header,
-        Description = "Please enter a valid token",
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        BearerFormat = "JWT",
-        Scheme = "Bearer"
-    });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            new string[] {}
-        }
-    });
-});
+//    // User can access only User resources
+//    options.AddPolicy("UserAccess", policy => policy.RequireRole("USER"));
+//}
+);
 
 var connectionString = builder.Configuration.GetConnectionString("DevConnection");
 
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+builder.Services.AddIdentityApiEndpoints<User>()
+    .AddEntityFrameworkStores<DataContext>();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Override default User validation logic
+    options.User.RequireUniqueEmail = true;
+    options.User.AllowedUserNameCharacters =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+});
 
 var app = builder.Build();
 
@@ -94,29 +58,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapIdentityApi<User>();
+
 // Use Authentication and Authorization
 app.UseHttpsRedirection();
 app.UseAuthentication();  // Enable JWT Authentication
 app.UseAuthorization();   // Enable Role-based Authorization
 
 app.MapControllers();
-
-// Example endpoint protected by "AdminAccess" policy
-app.MapGet("/admin-resource", [Authorize(Policy = "AdminAccess")] () =>
-{
-    return Results.Ok("This is an Admin-specific resource.");
-});
-
-// Example endpoint protected by "ClientAccess" policy
-app.MapGet("/client-or-user-resource", [Authorize(Policy = "ClientAccess")] () =>
-{
-    return Results.Ok("This is a resource for Clients and Users.");
-});
-
-// Example endpoint protected by "UserAccess" policy
-app.MapGet("/user-resource", [Authorize(Policy = "UserAccess")] () =>
-{
-    return Results.Ok("This is a User-specific resource.");
-});
 
 app.Run();

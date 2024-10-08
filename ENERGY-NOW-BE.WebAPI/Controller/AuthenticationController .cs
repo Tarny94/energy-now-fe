@@ -1,4 +1,7 @@
 ﻿using ENERGY_NOW_BE.Application.Auth;
+using ENERGY_NOW_BE.Core.Entity;
+using ENERGY_NOW_BE.Core.Interface;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ENERGY_NOW_BE.WebAPI.Controller
@@ -7,30 +10,23 @@ namespace ENERGY_NOW_BE.WebAPI.Controller
     [Route("api/[controller]")]
     public class AuthenticationController : ControllerBase
     {
-        private readonly AuthenticationService _authenticationService;
+        private readonly IAuthenticationService _authenticationService;
 
-        public AuthenticationController(AuthenticationService authenticationService)
+        public AuthenticationController(IAuthenticationService authenticationService)
         {
             _authenticationService = authenticationService;
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] UserRegister model)
         {
-            var token = await _authenticationService.AuthenticateAndGenerateJwtAsync(request.Username, request.Password);
-            if (token == null)
-            {
-                return Unauthorized("Invalid credentials.");
-            }
+            var result = await _authenticationService.RegisterUser(model);
 
-            return Ok(new { Token = token });
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            return BadRequest(result.Errors);
         }
     }
-
-    public class LoginRequest
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
-    }
-
 }

@@ -1,40 +1,84 @@
-﻿using ENERGY_NOW_BE.Core;
-using ENERGY_NOW_BE.Core.auth;
-using Org.BouncyCastle.Crypto.Generators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ENERGY_NOW_BE.Core.Entity;
+using ENERGY_NOW_BE.Core.Interface;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace ENERGY_NOW_BE.Application.Auth
 {
-    public class AuthenticationService
+    public class AuthenticationService: IAuthenticationService
     {
-        private readonly IUserRepository _userRepository;
-        private readonly JwtTokenHelper _jwtTokenHelper;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public AuthenticationService(IUserRepository userRepository, JwtTokenHelper jwtTokenHelper)
+        public AuthenticationService(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            _userRepository = userRepository;
-            _jwtTokenHelper = jwtTokenHelper;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
-        public async Task<string> AuthenticateAndGenerateJwtAsync(string username, string password)
+        // Example method that reuses the existing Identity functionality
+        public async Task<IdentityResult> RegisterUser(UserRegister userRegister)
         {
-            var user = await _userRepository.GetByUsernameAsync(username);
-            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
+            if (userRegister == null)
             {
-                return null; // Authentication failed
+                throw new ArgumentNullException(nameof(userRegister));
             }
 
-            // Get user roles
-            var roles = user.UserRoles.Select(ur => ur.Role.Name).ToList();
+            if (!IsValidEmail(userRegister.Email))
+            {
+                return IdentityResult.Failed(new IdentityError
+                {
+                    Code = "InvalidEmail",
+                    Description = "The email format is invalid."
+                });
+            }
 
-            // Generate JWT
-            var token = _jwtTokenHelper.GenerateToken(user, roles);
-            return token;
+            if (userRegister.IsClient)
+            {
+                return await _userManager.CreateAsync(CreateAClient(userRegister), userRegister.Password);
+            }
+
+            return await _userManager.CreateAsync(CreateAnUser(userRegister), userRegister.Password); ;
+        }
+
+        private User CreateAnUser(UserRegister NewUser)
+        {
+            try
+            {
+                var client = new User { UserName = NewUser.Email, ClientName = NewUser.ClientName, Email = NewUser.Email, PhoneNumber = NewUser.PhoneNumber, IsValidClient = NewUser.IsValidClient, Cui = NewUser.Cui };
+                return client;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        private User CreateAClient(UserRegister NewUser)
+        {
+            try
+            {
+                //var name = NewUser.FirstName + " " + NewUser.LastName;
+                var user = new User { UserName = NewUser.Email, ClientName = NewUser.ClientName, FirstName = NewUser.FirstName, LastName = NewUser.LastName, Email = NewUser.Email, PhoneNumber = NewUser.PhoneNumber };
+                return user;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
-
 }

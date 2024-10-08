@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using ENERGY_NOW_BE.Core.Entity;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -8,36 +9,41 @@ namespace ENERGY_NOW_BE.Core.auth
 {
     public class JwtTokenHelper
     {
-        private readonly string _secretKey;
+        //private readonly string _secretKey = "MySecretKeyMySecretKeyMySecretKeyMySecretKeyMySecretKey";
 
-        public JwtTokenHelper(string secretKey)
-        {
-            _secretKey = secretKey;
-        }
+        //private readonly string _secretKey2;
+        //public JwtTokenHelper()
+        //{
+        //}
 
-        public string GenerateToken(User user, List<string> roles)
-        {
-            var claims = new List<Claim>
-                {
-                    new Claim(JwtRegisteredClaimNames.Sub, user.Username),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-                };
+        //public JwtTokenHelper(string secretKey)
+        //{
+        //    _secretKey2 = secretKey;
+        //}
 
-            // Add roles as claims
-            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+        //public string GenerateToken(User user, List<string> roles)
+        //{
+        //    var claims = new List<Claim>
+        //        {
+        //            new Claim(JwtRegisteredClaimNames.Sub, user.Username),
+        //            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        //        };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        //    // Add roles as claims
+        //    //claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
-            var token = new JwtSecurityToken(
-                issuer: "yourIssuer",
-                audience: "yourAudience",
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: creds);
+        //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
+        //    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
+        //    var token = new JwtSecurityToken(
+        //        issuer: "https://localhost:7045/api",
+        //        audience: "https://localhost:7045/api",
+        //        claims: claims,
+        //        expires: DateTime.Now.AddMinutes(30),
+        //        signingCredentials: creds);
+
+        //    return new JwtSecurityTokenHandler().WriteToken(token);
+        //}
     }
 
 }

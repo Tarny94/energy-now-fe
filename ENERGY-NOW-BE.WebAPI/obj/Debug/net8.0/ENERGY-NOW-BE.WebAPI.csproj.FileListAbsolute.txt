@@ -129,3 +129,14 @@ C:\Personal\energy-now-be\ENERGY-NOW-BE.WebAPI\bin\Debug\net8.0\ru\Microsoft.Cod
 C:\Personal\energy-now-be\ENERGY-NOW-BE.WebAPI\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Personal\energy-now-be\ENERGY-NOW-BE.WebAPI\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Personal\energy-now-be\ENERGY-NOW-BE.WebAPI\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Personal\energy-now-be\ENERGY-NOW-BE.WebAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Personal\energy-now-be\ENERGY-NOW-BE.WebAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Personal\energy-now-be\ENERGY-NOW-BE.WebAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Personal\energy-now-be\ENERGY-NOW-BE.WebAPI\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+C:\Personal\energy-now-be\ENERGY-NOW-BE.WebAPI\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Personal\energy-now-be\ENERGY-NOW-BE.WebAPI\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Personal\energy-now-be\ENERGY-NOW-BE.WebAPI\bin\Debug\net8.0\EntityFramework.SqlServer.dll
+C:\Personal\energy-now-be\ENERGY-NOW-BE.WebAPI\bin\Debug\net8.0\EntityFramework.dll
+C:\Personal\energy-now-be\ENERGY-NOW-BE.WebAPI\bin\Debug\net8.0\Microsoft.AspNet.Identity.Core.dll
+C:\Personal\energy-now-be\ENERGY-NOW-BE.WebAPI\bin\Debug\net8.0\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Personal\energy-now-be\ENERGY-NOW-BE.WebAPI\bin\Debug\net8.0\System.Security.Permissions.dll

@@ -1,5 +1,6 @@
 ﻿using ENERGY_NOW_BE.Core;
 using ENERGY_NOW_BE.Core.Entity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -7,26 +8,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ENERGY_NOW_BE.Infrastructure
 {
-    public class UserRepository
+    public class UserRepository 
     {
         private readonly DataContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public UserRepository(DataContext context)
+        public UserRepository(DataContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        //public async Task<User?> GetByUsernameAsync(string username)
-        //{
-        //    return await _context.Users
-        //        .FirstOrDefaultAsync(u => u.Username == username);
-        //}
+        // Method to create a new user
+        public async Task<IdentityResult> CreateUserAsync(User user, string password)
+        {
+            return await _userManager.CreateAsync(user, password);
+        }
 
-        //public async Task AddAsync(User user)
-        //{
-        //    await _context.Users.AddAsync(user);
-        //    await _context.SaveChangesAsync();
-        //}
+        // Method to check if a user exists by email
+        public async Task<bool> UserExistsAsync(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            return user != null; // Return true if user exists
+        }
     }
 
 }

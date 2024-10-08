@@ -1,4 +1,4 @@
-﻿using ENERGY_NOW_BE.Core.auth;
+﻿using ENERGY_NOW_BE.Core.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,8 @@ namespace ENERGY_NOW_BE.Core
 {
     public interface IUserRepository
     {
-        Task<User> GetByUsernameAsync(string username);
-        Task AddAsync(User user);
+        //Task<User> GetByUsernameAsync(string username);
+        //Task AddAsync(User user);
     }
 
 }
