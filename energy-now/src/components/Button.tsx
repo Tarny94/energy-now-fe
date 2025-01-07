@@ -14,9 +14,10 @@ interface IButton {
   };
   label: string;
   onClick: () => void;
+  disable?: boolean;
 }
 
-const TabButton: React.FC<IButton> = ({ variant, color, size, sx, label, onClick }) => {
+const TabButton: React.FC<IButton> = ({disable, variant, color, size, sx, label, onClick }) => {
   return (
     <Button
       variant={variant}
@@ -24,6 +25,7 @@ const TabButton: React.FC<IButton> = ({ variant, color, size, sx, label, onClick
       onClick={onClick}
       size={size}
       sx={sx}
+      disabled={disable}
     >
       {label}
     </Button>

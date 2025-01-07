@@ -49,7 +49,7 @@ const TabDataGrid: React.FC = () => {
   );
 
   return (
-    <Box sx={{ height: 400, width: 1 }}>
+    <Box sx={{ height: 600, width: 1 }}>
       <DataGrid
       rows={rowsTestForDataGrid}
         columns={electritionFirmColumnsDataGrid}
