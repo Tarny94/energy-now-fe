@@ -37,6 +37,7 @@ export const registration = async (postData: IUserRegistration) => {
 };
 
 export const login = async (postData: IUserLogin) => {
+  let data = null
   try {
     const response = await fetch(`${BASE_URL}/Authentication/login`, {
       method: 'POST',
@@ -63,7 +64,7 @@ export const login = async (postData: IUserLogin) => {
       }
   
       // If the response is OK
-      const data = await response.json();
+      data = await response.json();
       console.log('Login successful:', data);
       alert('Login successful!');
     })
@@ -73,7 +74,7 @@ export const login = async (postData: IUserLogin) => {
     });
 
     console.log('responseAPILoggin:', response);
-    return response;
+    return await data;
   } catch (error) {
     console.error('Error creating post:', error);
     console.log('Error creating post2:', error);

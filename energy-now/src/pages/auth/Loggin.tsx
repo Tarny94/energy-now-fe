@@ -2,27 +2,29 @@ import React from 'react';
 import InputComponent from '../../components/Input';
 import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { handleBlur, handleClickShowPassword } from './utils/AuthUtils';
 import TabButton from '../../components/Button';
 import './styles/LogginPage.scss';
 import { login } from '../../services/AuthenticationService';
+import { AuthContext } from '../../context/AuthContext';
 
 const Loggin: React.FC = () => {
+  const {
+    showPassword, 
+    handleBlur, 
+    handleClickShowPassword, 
+    handleMouseDownPassword,
+    error,
+    setError,
+    isError,
+    setIsError,
+    handleLogin  
+  } = React.useContext(AuthContext);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [error, setError] = React.useState('');
-  const [errors, setErrors] = React.useState<any>([]);
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [isError, setIsError] = React.useState(false);
   const [fieldErrors, setFieldErrors] = React.useState({
     email: false,
     password: false,
   });
-
-
-  const handleClickShowPasswordFunction = () => {
-      handleClickShowPassword(setShowPassword, showPassword);
-  };
 
   const handleSubmit = async () => {
     if (email.trim() === '' || password.trim() === '') {
@@ -32,15 +34,14 @@ const Loggin: React.FC = () => {
       return;
     }
 
-  const userLoggin = {
-    email,
-    password
-  }  
-    const result = login(userLoggin);
+    const userLoggin = {
+      email,
+      password
+    }  
+    const result = await login(userLoggin);
+     handleLogin(result);
 
     console.log("result", await result);
-    
-
   };
 
   return <div className='loggin-container'>
@@ -54,7 +55,7 @@ const Loggin: React.FC = () => {
               ariaLabel='email'
               placeholder='Type your Email or Username'
               width={300}
-              onBlur={() => handleBlur('email', email, setFieldErrors, setError)}
+              onBlur={() => handleBlur('email', email, setFieldErrors)}
               error={fieldErrors.email}
           />
           <InputComponent 
@@ -64,7 +65,7 @@ const Loggin: React.FC = () => {
               width={300}
               placeholder='Type your Password'
               ariaLabel='password'
-              onBlur={() => handleBlur('password', password, setFieldErrors, setError)}
+              onBlur={() => handleBlur('password', password, setFieldErrors)}
               error={fieldErrors.password}
               endAdornment=
                 {
@@ -73,8 +74,8 @@ const Loggin: React.FC = () => {
                       <IconButton
                           size="small"
                           aria-label="toggle password visibility"
-                          onClick={handleClickShowPasswordFunction}
-                          onMouseDown={handleClickShowPasswordFunction}
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
                       >
                           {showPassword ? (
                           <VisibilityOff fontSize="small" />

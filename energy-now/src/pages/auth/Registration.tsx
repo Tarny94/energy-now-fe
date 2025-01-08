@@ -1,22 +1,39 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import InputComponent from '../../components/Input';
 import TabButton from '../../components/Button';
 import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { registration } from '../../services/AuthenticationService';
 import './styles/RegistrationPage.scss';
-import { handleMouseDownPassword, handleClickShowPassword, handleBlur} from './utils/AuthUtils';
+import {  } from './utils/AuthUtils';
+import { AuthContext } from '../../context/AuthContext';
+
 
 const Registration: React.FC = () => {
-    const [firstName, setFirstName] = React.useState('');
-    const [lastName, setLastName] = React.useState('');
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [confirmPassword, setConfirmPassword] = React.useState('');
-    const [error, setError] = React.useState('');
-    const [errors, setErrors] = React.useState<any>([]);
-    const [showPassword, setShowPassword] = React.useState(false);
-    const [isError, setIsError] = React.useState(false);
+    const { 
+        handleClickShowPassword, 
+        handleMouseDownPassword, 
+        handleBlur,
+        error,
+        setError,
+        errors,
+        setErrors,
+        isError,
+        setIsError,
+        showPassword,
+        setShowPassword,
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+        setFirstName,
+        setLastName,
+        setEmail,
+        setPassword,
+        setConfirmPassword,
+    } = useContext(AuthContext);
+
     const [fieldErrors, setFieldErrors] = React.useState({
         firstName: false,
         lastName: false,
@@ -24,7 +41,6 @@ const Registration: React.FC = () => {
         password: false,
         confirmPassword: false,
     });
-    const responseRef = useRef<any>(null);
 
     useEffect(() => {
         handleErrors();
@@ -85,11 +101,9 @@ const Registration: React.FC = () => {
 
         try {
             const response = await registration(userRegistration);
-      
-            // responseRef.current = response;
-            response && response.lenght > 0 && await setErrors(response);
 
             if (response && response.length > 0) {
+                await setErrors(response)
                 setErrors(response.map((item: any) => item.description || 'Unknown error'));
             } else {
                 setErrors([]);
@@ -103,10 +117,6 @@ const Registration: React.FC = () => {
         }
     }
 
-    const handleClickShowPasswordFunction = () => {
-        handleClickShowPassword(setShowPassword, showPassword);
-    };
-
     return <div className='registration-container'>
         <h1 className='registration-title'>Registration Page</h1>
         <div className='registration-field-container'>
@@ -117,7 +127,7 @@ const Registration: React.FC = () => {
                     placeholder='Type First Name' 
                     width={300} 
                     ariaLabel='first name'
-                    onBlur={() => handleBlur('firstName', firstName, setFieldErrors, setError)}
+                    onBlur={() => handleBlur('firstName', firstName, setFieldErrors)}
                     error={fieldErrors.firstName} 
                     />
                 <InputComponent 
@@ -127,7 +137,7 @@ const Registration: React.FC = () => {
                     ariaLabel='last name'
                     placeholder='Type Last Name' 
                     width={300}
-                    onBlur={() => handleBlur('lastName', lastName, setFieldErrors, setError)}
+                    onBlur={() => handleBlur('lastName', lastName, setFieldErrors)}
                     error={fieldErrors.lastName}
                     />
                 <InputComponent 
@@ -137,7 +147,7 @@ const Registration: React.FC = () => {
                     ariaLabel='email'
                     placeholder='Type Email'
                     width={300}
-                    onBlur={() => handleBlur('email', email, setFieldErrors, setError)}
+                    onBlur={() => handleBlur('email', email, setFieldErrors)}
                     error={fieldErrors.email}
                 />
                 <InputComponent 
@@ -147,7 +157,7 @@ const Registration: React.FC = () => {
                     width={300}
                     placeholder='Type Password'
                     ariaLabel='password'
-                    onBlur={() => handleBlur('password', password, setFieldErrors, setError)}
+                    onBlur={() => handleBlur('password', password, setFieldErrors)}
                     error={fieldErrors.password}
                     endAdornment=
                         {
@@ -156,7 +166,7 @@ const Registration: React.FC = () => {
                                 <IconButton
                                     size="small"
                                     aria-label="toggle password visibility"
-                                    onClick={handleClickShowPasswordFunction}
+                                    onClick={handleClickShowPassword}
                                     onMouseDown={handleMouseDownPassword}
                                 >
                                     {showPassword ? (
@@ -176,7 +186,7 @@ const Registration: React.FC = () => {
                     width={300}
                     placeholder='Confirm Password'
                     ariaLabel='confirm password'
-                    onBlur={() => handleBlur('confirmPassword', confirmPassword, setFieldErrors, setError)}
+                    onBlur={() => handleBlur('confirmPassword', confirmPassword, setFieldErrors)}
                     error={fieldErrors.confirmPassword}                
                      />
                     <div className='registration-errors'>
