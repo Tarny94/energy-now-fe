@@ -74,17 +74,33 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
 
-  const [authData, setAuthData] = useState(() => {
+  const [authData, setAuthData] = React.useState(() => {
     const storedAuth = localStorage.getItem('authData');
-    return storedAuth ? JSON.parse(storedAuth) : null;
+    if (storedAuth) {
+      try {
+        return JSON.parse(storedAuth);
+      } catch (e) {
+        console.error('Failed to parse authData from localStorage', e);
+        return null;
+      }
+    }
+    return null;
   });
 
   useEffect(() => {
-    const storedAuth = localStorage.getItem('authData');
-    console.log('authData:', authData, storedAuth);
+      checkExpiredToken();
+      // console.log('authData:', authData);
   }, []);
- 
 
+  const checkExpiredToken = () => {
+    if (authData && authData.expiresIn) {
+      const expiresAt = new Date(authData.expiresIn);
+      if (expiresAt < new Date()) {
+        handleLogout();
+      }
+    }
+  }
+ 
   const handleLogin = (data: any) => {
     setAuthData(data);
     localStorage.setItem(AUTH_LOCAL_STORAGE, JSON.stringify(data));

@@ -17,6 +17,7 @@ const Loggin: React.FC = () => {
     setError,
     isError,
     setIsError,
+    setErrors,
     handleLogin  
   } = React.useContext(AuthContext);
   const [email, setEmail] = React.useState('');
@@ -38,10 +39,16 @@ const Loggin: React.FC = () => {
       email,
       password
     }  
-    const result = await login(userLoggin);
-     handleLogin(result);
+    const response = await login(userLoggin);
 
-    console.log("result", await result);
+    if (response && response.length > 0) {
+        setError(response);
+    } else {
+        setErrors([]);
+        setError('');
+        console.log("Loggin successful");   
+    }
+    handleLogin(response);
   };
 
   return <div className='loggin-container'>
@@ -86,6 +93,9 @@ const Loggin: React.FC = () => {
                   </InputAdornment> 
                 }
               />
+              <div className='loggin-errors'>
+                  <p>{error && error}</p>
+              </div>
         </div>
        <div className='loggin-buttons'>
           <TabButton 

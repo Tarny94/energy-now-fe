@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect } from 'react';
 import InputComponent from '../../components/Input';
 import TabButton from '../../components/Button';
 import { IconButton, InputAdornment } from '@mui/material';
@@ -105,6 +105,8 @@ const Registration: React.FC = () => {
             if (response && response.length > 0) {
                 await setErrors(response)
                 setErrors(response.map((item: any) => item.description || 'Unknown error'));
+                console.log("Registration r", response);
+                
             } else {
                 setErrors([]);
                 setError('');
