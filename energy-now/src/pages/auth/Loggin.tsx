@@ -51,10 +51,18 @@ const Loggin: React.FC = () => {
     handleLogin(response);
   };
 
-  return <div className='loggin-container'>
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handleSubmit();
+      console.log('Enter key pressed');
+      
+    }
+  };
+
+  return <div className='loggin-container' >
       <h1 className='loggin-title'>Loggin</h1>
-      <div className='loggin-field-container'>
-        <div className='loggin-fields'>
+      <div className='loggin-field-container'  >
+        <div className='loggin-fields' onKeyDown={handleKeyDown}>
           <InputComponent 
               onChange={setEmail} 
               required type='email' 
@@ -103,6 +111,7 @@ const Loggin: React.FC = () => {
             label="Loggin" 
             variant="contained" 
             color="primary"
+           
               />
         </div>
         <div>

@@ -1,0 +1,33 @@
+
+
+.client-configuration-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    font-family: 'Times New Roman', Times, serif;
+
+    .client-configuration-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .client-configuration-form {
+
+        .client-configuration-inputs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            
+        }
+
+        .client-configuration-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+    }
+}

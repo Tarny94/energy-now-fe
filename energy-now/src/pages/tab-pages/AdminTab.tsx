@@ -59,16 +59,19 @@ const AdminTab: React.FC = () => {
   const[clients, setClients] = React.useState<IClients[]>();
 
   useEffect(() => { 
-    
-    getClients(authData.token).then( async (data) => {
+    if(authData) {
+      getClients(authData.token).then( async (data) => {
 
-      console.log('Admin data: ', data);
-      if(data.length > 0) {
-        setClients(data);
-      } else {
-        console.log('Something went wrong');
-      }
-    });
+        console.log('Admin data: ', data);
+        if(data.length > 0) {
+          setClients(data);
+        } else {
+          console.log('Something went wrong');
+        }
+      });
+    }
+    
+
   }, []);
 
   useEffect(() => {

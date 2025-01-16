@@ -7,6 +7,7 @@ import ClientPage from '../pages/ClientPage'
 import Registration from '../pages/auth/Registration';
 import Loggin from '../pages/auth/Loggin';
 import AdminTab from '../pages/tab-pages/AdminTab';
+import ClientConfiguration from '../pages/ClientConfiguration';
 
 // import AuthPage from '../pages/AuthPage';
 // import AboutUsPage from '../pages/AboutUsPage';
@@ -17,7 +18,8 @@ const AppRoutes: React.FC = () => {
       <Routes>
         <Route path="/" 
               //  element={<LandingPage />} // This is the original code
-               element={<AdminTab />}
+              //  element={<AdminTab />}
+              element={<ClientConfiguration />}
                 />
         <Route path="/user" element={<UserPage />} />
         <Route path="/client" element={<ClientPage />} />
