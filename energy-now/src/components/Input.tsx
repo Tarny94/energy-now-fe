@@ -71,8 +71,7 @@ const InputComponent: React.FC<IInput> = ({onBlur, error = false, type, color, s
     endAdornment={endAdornment}
     error={error}
     onBlur={onBlur}
-
-    />;
+    />
 }
 
 export default InputComponent;
