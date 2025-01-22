@@ -18,6 +18,7 @@ interface IMultipleSelectCheckmarksProps {
     setSelectedItems: (value: string[]) => void;
     selectedItems: string[];
     items: string[];
+    required?: boolean;
 }
 
 export default function MultipleSelectCheckmarks({
@@ -29,7 +30,8 @@ export default function MultipleSelectCheckmarks({
     width = 300, 
     setSelectedItems, 
     selectedItems,
-    items
+    items,
+    required = false
 }: IMultipleSelectCheckmarksProps) {
 
   const handleChange = (event: SelectChangeEvent<typeof selectedItems>) => {
@@ -43,7 +45,7 @@ export default function MultipleSelectCheckmarks({
 
   return (              
     <div>
-      <FormControl sx={{ m: {m}, width: width, margin: 2 }}>
+      <FormControl sx={{ m: {m}, width: width, margin: 2 }} required={required}>
         <InputLabel id={id}>{inputLabelName}</InputLabel>
         <Select
           labelId={labelId}

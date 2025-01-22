@@ -11,7 +11,6 @@ const ClientConfiguration: React.FC = () => {
 
     const [selectedSpecialisations, setSelectedSpecialisations] = React.useState<string[]>([]);
 
-
   return <div className="client-configuration-container">
     <h1 className="client-configuration-title">CLIENT CONFIGURATION</h1>
     <p>Client Configuration Content</p>
@@ -20,59 +19,73 @@ const ClientConfiguration: React.FC = () => {
             <InputComponent 
                 onChange={() => {}} 
                 placeholder="Icon ( In progress... )"
-                disabled
+                label="Icon ( In progress... )"
                 width={350}
+                disabled
             />
             <InputComponent 
                 onChange={() => {}} 
-                placeholder="Firm Name"
+                placeholder="Type your firm name..."
+                label="Firm Name"
                 required
                 type="text"
                 width={350}
             />
             <InputComponent 
                 onChange={() => {}} 
-                placeholder="CUI"
+                placeholder="Type your CUI number..."
+                label="CUI"
                 type="number"
                 width={350}
+                required
             />
             <InputComponent 
                 onChange={() => {}} 
-                placeholder="Email"
+                placeholder="Type your emial..."
+                label="Email"
                 type="email"
                 width={350}
+                required
             />
             <InputComponent 
                 onChange={() => {}} 
-                placeholder="County"
+                placeholder="Type your county..."
+                label="County"
                 type="text"
                 width={350}
+                required
             />
             <InputComponent 
                 onChange={() => {}} 
-                placeholder="City"
+                placeholder="Type your city..."
+                label="City"
                 type="text"
                 width={350}
+                required
             />
             <InputComponent 
                 onChange={() => {}} 
-                placeholder="Phone"
+                placeholder="Type your phone number..."
+                label="Phone"
                 type="tel"
                 width={350}
+                required
             />
             <InputComponent 
                 onChange={() => {}} 
-                placeholder="Details"
+                placeholder="Type a description..."
+                label="Description"
                 type="text"
                 width={350}
             />
-                        <MultipleSelectCheckmarks               
-                  width={350} 
-                  setSelectedItems={setSelectedSpecialisations} 
-                  selectedItems={selectedSpecialisations}
-                  label="Specializations"
-                  items={SPECIALIZATIONS.length > 0 ? SPECIALIZATIONS : []}
-                  inputLabelName="Specializations"            
+            <MultipleSelectCheckmarks               
+                width={350} 
+                setSelectedItems={setSelectedSpecialisations} 
+                selectedItems={selectedSpecialisations}
+                label="Specializations"
+                items={SPECIALIZATIONS.length > 0 ? SPECIALIZATIONS : []}
+                inputLabelName="Specializations"
+                required            
             />
         </div>
         <div className="client-configuration-buttons">

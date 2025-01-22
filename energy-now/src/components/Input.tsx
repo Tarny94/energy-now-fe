@@ -1,4 +1,4 @@
-import { Input } from '@mui/material';
+import { FormControl, Input, InputLabel } from '@mui/material';
 import { on } from 'events';
 import React, { Dispatch, SetStateAction } from 'react';
 import TextField from '@mui/material/TextField';
@@ -48,30 +48,40 @@ interface IInput{
     endAdornment?: React.ReactNode;
     error?: boolean;
     onBlur?: () => void;
+    variant?: "standard" | "outlined" | "filled";
+    label?: string;
   }
 
-const InputComponent: React.FC<IInput> = ({onBlur, error = false, type, color, size, sx, onChange, disabled, required = false, ariaLabel, placeholder, name, width, endAdornment}) => {
+const InputComponent: React.FC<IInput> = ({label, variant = "standard", onBlur, error = false, type, color, size, sx, onChange, disabled, required = false, ariaLabel, placeholder, name, width, endAdornment}) => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onChange(event.target.value);
     }
 
-  return <Input
-    aria-label={ariaLabel}
-    placeholder={placeholder}
-    name={name} 
-    type={type}
-    color={color}
-    size={size}
-    title='url'
-    sx={{width: width, padding: 1.5, ...sx}} 
-    onChange={handleChange}
-    disabled={disabled}
+
+  return (
+        //"standard" | "outlined" | "filled"
+  <FormControl 
+    variant={variant} 
+    disabled={disabled} 
+    sx={{marginTop: 1, width: width, }} 
     required={required}
-    endAdornment={endAdornment}
-    error={error}
-    onBlur={onBlur}
-    />
+  >
+    <InputLabel>{label}</InputLabel>
+    <Input
+      aria-label={ariaLabel}
+      placeholder={placeholder}
+      name={name} 
+      type={type}
+      color={color}
+      size={size}
+      onChange={handleChange}
+      endAdornment={endAdornment}
+      error={error}
+      onBlur={onBlur}
+      />
+  </FormControl>
+  );
 }
 
 export default InputComponent;
