@@ -42,7 +42,7 @@ const FindElectricianTab: React.FC = () => {
 
   return (
     <div>
-      <div>
+      <div style={{display: 'flex'}}>
         <AutocompleteInput
           sx={{ width: 300 }}
           options={filterCounties()}

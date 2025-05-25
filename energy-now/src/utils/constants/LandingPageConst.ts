@@ -9,18 +9,19 @@ import {
 import { Button } from '@mui/material';
 
 
-export const rowsTestForDataGrid2 = [
-    { id: 1, avatar: randomColor(), name: 'FanElectric', myEmail: 'electrician@gmail.com', rating: 4, electritionType: 'Instalatii Electrice', powerAuthorize: '20kw', description: 'Apasa aici', finishedTickets: 12, authorizate: true, createTicket: 'Apasa aici'},
-    { id: 2, avatar: randomColor(), name: 'FanElectric', myEmail: 'electrician@gmail.com', rating: 5, electritionType: 'Instalatii Electrice', powerAuthorize: '20kw', description: 'Apasa aici', finishedTickets: 12, authorizate: true, createTicket: 'Apasa aici' },
-];
+// export const rowsTestForDataGrid2 = [
+//     { id: 1, avatar: randomColor(), name: 'FanElectric', myEmail: 'electrician@gmail.com', rating: 4, electritionType: 'Instalatii Electrice', powerAuthorize: '20kw', description: 'Apasa aici', finishedTickets: 12, authorizate: true, createTicket: 'Apasa aici'},
+//     { id: 2, avatar: randomColor(), name: 'FanElectric', myEmail: 'electrician@gmail.com', rating: 5, electritionType: 'Instalatii Electrice', powerAuthorize: '20kw', description: 'Apasa aici', finishedTickets: 12, authorizate: true, createTicket: 'Apasa aici' },
+// ];
 
-export const rowsTestForDataGrid = Array.from({ length: 10 }, (_, index) => ({
+export const rowsTestForDataGrid = Array.from({ length: 120 }, (_, index) => ({
     id: index,
     avatar: randomColor(),
     name: `Firma ${index + 1}`,
     myEmail: randomEmail(),
+    phoneNumber: Math.floor(Math.random() * 53231232).toString(),
     rating: Math.floor(Math.random() * 5) + 1,
-    electritionType: 'Instalatii Electrice',
+    electritionType: 'Instalatii Electrice',    
     powerAuthorize: '11kw',
     description: 'Apasa aici',
     finishedTickets: Math.floor(Math.random() * 20),
@@ -56,6 +57,13 @@ export const electritionFirmColumnsDataGrid: GridColDef[] = [
         headerName: 'Email',
         width: 150,
         renderCell: renderEmail,
+    },
+    {
+        field: 'phoneNumber',
+        headerName: 'Telefon',
+        width: 150,
+        type: 'number',
+        
     },
     {
         field: 'rating',

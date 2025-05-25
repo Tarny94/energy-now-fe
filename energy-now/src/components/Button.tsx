@@ -14,9 +14,11 @@ interface IButton {
   };
   label: string;
   onClick: () => void;
+  disable?: boolean;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
 }
 
-const TabButton: React.FC<IButton> = ({ variant, color, size, sx, label, onClick }) => {
+const TabButton: React.FC<IButton> = ({onKeyDown, disable, variant, color, size, sx, label, onClick }) => {
   return (
     <Button
       variant={variant}
@@ -24,6 +26,8 @@ const TabButton: React.FC<IButton> = ({ variant, color, size, sx, label, onClick
       onClick={onClick}
       size={size}
       sx={sx}
+      disabled={disable}
+      onKeyDown={onKeyDown}
     >
       {label}
     </Button>
